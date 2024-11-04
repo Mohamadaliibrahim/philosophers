@@ -6,7 +6,7 @@
 /*   By: mohamibr <mohamibr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 22:18:56 by mohamibr          #+#    #+#             */
-/*   Updated: 2024/11/02 19:42:37 by mohamibr         ###   ########.fr       */
+/*   Updated: 2024/11/03 16:28:32 by mohamibr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 # include "../ft_printf/ft_printf.h"
 # include <fcntl.h>
 # include <pthread.h>
-# include <stdlib.h>
 # include <stdio.h>
+# include <stdlib.h>
 # include <sys/time.h>
 # include <sys/wait.h>
 # include <unistd.h>
@@ -29,6 +29,7 @@ typedef struct s_philo
 	long			last_meal_time;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
+	pthread_mutex_t	state_mutex;
 	pthread_t		thread;
 	struct s_data	*data;
 }					t_philo;
@@ -43,6 +44,7 @@ typedef struct s_data
 	long			start_time;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	log_mutex;
+	pthread_mutex_t	alive_mutex;
 	int				all_alive;
 	t_philo			*philo;
 }					t_data;
@@ -59,5 +61,11 @@ void	eat(t_philo *philo);
 void	take_forks(t_philo *philo);
 void	think(t_philo *philo);
 long	current_time(void);
+void	*monitor_philos(void *arg);
+void	start_simulation(t_data *data, t_philo *philo);
+void	join_thread_and_cleanup(t_data *data, t_philo *philo);
+void	continue_it(int num_philo, char **av);
+void	log_action(t_philo *philo, char *action);
+void	accurate_sleep(long time_in_ms);
 
 #endif

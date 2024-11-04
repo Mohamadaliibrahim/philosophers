@@ -6,17 +6,22 @@
 /*   By: mohamibr <mohamibr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 22:49:03 by mohamibr          #+#    #+#             */
-/*   Updated: 2024/10/31 13:06:07 by mohamibr         ###   ########.fr       */
+/*   Updated: 2024/11/04 19:23:18 by mohamibr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
+#include <stdlib.h>
+#include <stdio.h>
 
+// Checks if a string consists solely of digits
 int	is_a_number(char *str)
 {
 	int	i;
 
 	i = 0;
+	if (!str)
+		return (0);
 	while (str[i])
 	{
 		if (str[i] < '0' || str[i] > '9')
@@ -26,6 +31,7 @@ int	is_a_number(char *str)
 	return (1);
 }
 
+// Validates all input arguments
 void	check_input(char **av)
 {
 	int	i;
@@ -35,22 +41,27 @@ void	check_input(char **av)
 	{
 		if (is_a_number(av[i]) == 0)
 		{
-			ft_printf("input is not numbers\n");
+			ft_printf("Error: All inputs must be numbers.\n");
 			exit(EXIT_FAILURE);
 		}
 		i++;
 	}
 }
 
-void	lets_free(t_philo *philo)
+// Frees allocated resources and destroys mutexes
+void	lets_free(t_philo *philos, t_data *data)
 {
-	t_philo	*tmp;
+	int	i;
 
-	tmp = philo;
-	while (philo)
+	i = 0;
+	while (i < data->num_philosophers)
 	{
-		tmp = philo;
-		philo = philo->next;
-		free(tmp);
+		pthread_mutex_destroy(&data->forks[i]);
+		pthread_mutex_destroy(&philos[i].state_mutex);
+		i++;
 	}
+	pthread_mutex_destroy(&data->log_mutex);
+	pthread_mutex_destroy(&data->alive_mutex);
+	free(data->forks);
+	free(philos);
 }
