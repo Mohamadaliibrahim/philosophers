@@ -5,7 +5,9 @@ SRC = srcs/philo.c \
 	  srcs/philo_utils.c \
 	  srcs/utils/ft_atoi.c \
 	  srcs/init_philo.c \
-	  srcs/routine.c
+	  srcs/routine.c \
+	  srcs/minitor.c \
+	  srcs/philosopher_routine.c \
 
 OBJ = $(SRC:.c=.o)
 NAME = philo

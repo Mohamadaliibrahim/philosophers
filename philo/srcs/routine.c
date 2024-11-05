@@ -6,25 +6,11 @@
 /*   By: mohamibr <mohamibr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:21:08 by mohamibr          #+#    #+#             */
-/*   Updated: 2024/11/04 19:39:47 by mohamibr         ###   ########.fr       */
+/*   Updated: 2024/11/05 20:44:48 by mohamibr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
-
-void	log_action(t_philo *philo, char *action)
-{
-	int	all_alive;
-
-	pthread_mutex_lock(&philo->data->alive_mutex);
-	all_alive = philo->data->all_alive;
-	pthread_mutex_unlock(&philo->data->alive_mutex);
-	pthread_mutex_lock(&philo->data->log_mutex);
-	if (all_alive)
-		ft_printf("%d %d %s\n", (int)(current_time() - philo->data->start_time),
-			philo->id, action);
-	pthread_mutex_unlock(&philo->data->log_mutex);
-}
 
 void	think(t_philo *philo)
 {
