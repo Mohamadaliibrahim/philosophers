@@ -15,7 +15,7 @@
 void	think(t_philo *philo)
 {
 	log_action(philo, "is thinking");
-	accurate_sleep(5);
+	accurate_sleep(9);
 }
 
 void	take_forks(t_philo *philo)
